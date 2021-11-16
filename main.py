@@ -23,6 +23,9 @@ screen = pygame.display.set_mode((288, 576))
 clock = pygame.time.Clock()
 
 # Variables
+gravity = 0.25  # will be applied on bird_movement
+bird_movement = 0  # will move the rect
+
 frames = 120  # How many frames refreshed per second
 s_dimensions = (288, 576)  # Tuple with dimensions of the screen variable (width, height)
 
@@ -34,6 +37,10 @@ floor_surface = pygame.image.load('assets/sprites/base.png').convert()  # floor 
 # floor_surface = pygame.transform.scale2x(floor_surface)
 floor_x_position = 0  # x-coordinate of floor
 
+bird_surface = pygame.image.load('assets/sprites/bluebird-midflap.png').convert()  # initial bird image
+# bird_surface = pygame.transform.scale2x(bird_surface)
+bird_rect = bird_surface.get_rect(center=(50, 256))  # rect: will be used for collisions
+
 # Start the game loop
 while True:  # This runs until loop is broken from the inside
     # Create event loop to listen for events every iteration of the while loop
@@ -41,8 +48,19 @@ while True:  # This runs until loop is broken from the inside
         if event.type == pygame.QUIT:  # Checks type of event
             pygame.quit()  # This is the opposite of pygame.init()
             sys.exit()  # Allows us to completely exit window. Uses sys module
+
+        if event.type == pygame.KEYDOWN:  # checks if any type of key has been pressed
+            if event.key == pygame.K_SPACE:
+                bird_movement = 0  # Nullifies effect of gravity
+                bird_movement -= 6  # Modifies bird movement
+
     # Put images on the screen, Must be inside game loop. surface1.blit(surface2,(x,y))
     screen.blit(bg_surface, (0, 0))  # blit: method used to put one surface on another one.
+
+    bird_movement += gravity
+    bird_rect.centery += bird_movement  # changes y axis of center by bird_movement variable
+    screen.blit(bird_surface, bird_rect)  # draws bird on the main surface
+
     floor_x_position -= 1  # X position of floor_surface is updated every iteration (creates moving floor)
     draw_floor()  # Function for drawing floor
     if floor_x_position <= -288:  # Conditional to create endless floor
