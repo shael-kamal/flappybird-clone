@@ -14,3 +14,7 @@ Code is based on a YouTube tutorial by the channel **ClearCode**.
 * Channel Link : https://www.youtube.com/watch?v=UZg49z76cLw
 * Tutorial Source Code: https://github.com/clear-code-projects/FlappyBird_Python
 
+## In game screenshots
+
+![alt text](assets/projectscreenshots/ss2.jpg)
+![alt text](assets/projectscreenshots/SharedScreenshot.jpg)
